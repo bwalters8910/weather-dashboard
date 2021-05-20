@@ -1,0 +1,49 @@
+.d-f {
+    display: flex;
+}
+
+.d-n {
+    display: none;
+}
+
+.f-d-c {
+    flex-direction: column;
+}
+
+.f-d-r {
+    flex-direction: row;
+}
+
+.m-a {
+    margin:auto;
+}
+
+.p-5px {
+    padding:5px;
+}
+
+.b-s {
+    border:solid;
+}
+
+.j-c-c {
+    justify-content: center;
+}
+
+.j-c-sb {
+    justify-content: space-between;
+}
+
+.danger {
+    background-color: red;
+    color: white;
+}
+
+.good {
+    background-color: green;
+    color: white;
+}
+
+.moderate {
+    background-color: yellow;
+}
