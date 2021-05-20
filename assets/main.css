@@ -37,13 +37,16 @@
 .danger {
     background-color: red;
     color: white;
+    width: 12%;
 }
 
 .good {
     background-color: green;
     color: white;
+    width: 12%;
 }
 
 .moderate {
     background-color: yellow;
+    width: 12%;
 }
