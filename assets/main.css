@@ -1,3 +1,11 @@
+.bgc-blue {
+    background-color: rgb(44, 44, 168);
+}
+
+.c-white {
+    color:white;
+}
+
 .d-f {
     display: flex;
 }
@@ -58,3 +66,4 @@
     background-color: yellow;
     width: 12%;
 }
+

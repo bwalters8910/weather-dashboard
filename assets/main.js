@@ -19,7 +19,7 @@ function appendForcast(data) {
     // need to reformat the date to match
 
     $("#forecastContainer").append(
-      `<div class="d-f f-d-c b-s p-20px">
+      `<div class="d-f f-d-c b-s p-20px card text-white bg-secondary mb-3">
             <p>${date}</p>
             <p><image src="https://openweathermap.org/img/w/${data.daily[i].weather[0].icon}.png"></p>
             <p>Temp: ${data.daily[i].temp.day} °F</p>
@@ -33,14 +33,16 @@ function appendForcast(data) {
 function appendToday(data) {
   // converts unix to readable date
   let unixTime = data.current.dt;
-  let date = new Date(unixTime * 1000);
+  let regularDate = new Date(unixTime * 1000);
 
   $("#currentDayCard").append(
-    `<h2>${date} <image src="https://openweathermap.org/img/w/${data.current.weather[0].icon}.png"></h2>
+    `<div class="card text-dark bg-light mb-3">
+    <h2>${regularDate} <image src="https://openweathermap.org/img/w/${data.current.weather[0].icon}.png"></h2>
         <p>Temp: ${data.current.temp} °F</p>
         <p>Wind: ${data.current.wind_speed} mph</p>
         <p>Humidity: ${data.current.humidity}%</p>
-        <p id="uv">UV Index: ${data.current.uvi}</p>`
+        <p id="uv">UV Index: ${data.current.uvi}</p>
+        </div>`
   );
   addBorder();
   checkUvi(data);
@@ -64,6 +66,12 @@ function checkUvi(data) {
     $("#uv").addClass("moderate");
   }
 };
+
+function checkValue(e) {
+  console.log();
+  let selectedCity = e.target.getAttribute("data-past");
+  getLatLon(selectedCity);
+}
 
 function clearCurrentInfo() {
   $("#currentDayCard").empty();
@@ -98,7 +106,7 @@ function getForecast(lat, lon, apiKey) {
 
 function getLatLon(city) {
   clearCurrentInfo();
-  let chosenCity = city || $("#cityInput").val() || "chicago";
+  let chosenCity = city || $("#cityInput").val() || "Chicago";
   if (!cities.includes(chosenCity)) {
     cities.push(chosenCity);
   }
@@ -133,11 +141,6 @@ init();
 $("#searchBtn").on("click", () => getLatLon());
 $(".btn-secondary").on("click", checkValue);
 
-function checkValue(e) {
-  console.log();
-  let selectedCity = e.target.getAttribute("data-past");
-  getLatLon(selectedCity);
-}
 
 // TO DO's
 // convert Unix Time to readable
