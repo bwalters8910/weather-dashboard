@@ -12,10 +12,15 @@ function addBorder() {
 
 function appendForcast(data) {
   showTitle();
-  for (i = 0; i < 5; i++) {
+
+  for (i = 1; i < 6; i++) {
+    let unixTime = data.daily[i].dt;
+    let date = new Date(unixTime * 1000);
+    // need to reformat the date to match
+
     $("#forecastContainer").append(
       `<div class="d-f f-d-c b-s p-20px">
-            <p>${data.daily[i].dt}</p>
+            <p>${date}</p>
             <p><image src="https://openweathermap.org/img/w/${data.daily[i].weather[0].icon}.png"></p>
             <p>Temp: ${data.daily[i].temp.day} °F</p>
             <p>Wind: ${data.daily[i].wind_speed} mph</p>
@@ -26,8 +31,12 @@ function appendForcast(data) {
 };
 
 function appendToday(data) {
+  // converts unix to readable date
+  let unixTime = data.current.dt;
+  let date = new Date(unixTime * 1000);
+
   $("#currentDayCard").append(
-    `<h2>${data.current.dt} <image src="https://openweathermap.org/img/w/${data.current.weather[0].icon}.png"></h2>
+    `<h2>${date} <image src="https://openweathermap.org/img/w/${data.current.weather[0].icon}.png"></h2>
         <p>Temp: ${data.current.temp} °F</p>
         <p>Wind: ${data.current.wind_speed} mph</p>
         <p>Humidity: ${data.current.humidity}%</p>
