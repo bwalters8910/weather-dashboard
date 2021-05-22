@@ -42,7 +42,6 @@ function checkLocalStorage() {
      if (citiesStorage) {
         // loop through local storage and create btns with the button label as the city
         cities = JSON.parse(citiesStorage);
-       console.log(cities)
        createBtns(cities);
     };
 };
@@ -80,11 +79,9 @@ function getForecast(lat, lon, apiKey) {
     `http://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&exclude=minutely,hourly&appid=${apiKey}`
   )
     .then(function (response) {
-      console.log(response.status);
       return response.json();
     })
     .then(function (data) {
-      console.log(data);
       appendToday(data);
       appendForcast(data);
     });
@@ -93,12 +90,15 @@ function getForecast(lat, lon, apiKey) {
 function getLatLon(city) {
   clearCurrentInfo();
   let chosenCity = city || $("#cityInput").val() || "chicago";
-  cities.push(city);
+  if (!cities.includes(chosenCity)) {
+    cities.push(chosenCity);
+  }
   storeCity();
   let apiKey = "c4688ef0bd37f92ed6bda82728650dcc";
   fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${chosenCity}&limit=5&appid=${apiKey}`)
     .then(function (response) {
       console.log(response.status);
+      console.log(response);
       // //  Conditional for the the response.status.
       //  if (response.status !== 200) {
       // //   // Place the response.status on the page.
@@ -111,8 +111,6 @@ function getLatLon(city) {
       console.log(data);
       let lon = data[0].lat;
       let lat = data[0].lon;
-      console.log(lon);
-      console.log(lat);
       getForecast(lon, lat, apiKey);
     });
 };
@@ -134,8 +132,6 @@ function checkValue(e) {
 
 // TO DO's
 // convert Unix Time to readable
-// check local storage for searched city, and don't add if already there /// some() method? // use includes
-// click on past city button (class) - just call the get weather with the label of button // use this
 // append buttons at the end of the cycle, without refreshing page
 
 
