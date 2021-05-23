@@ -1,7 +1,5 @@
 let cities = [];
 
-
-
 function init() {
   checkLocalStorage();
 };
@@ -13,13 +11,14 @@ function addBorder() {
 function appendForcast(data) {
   showTitle();
 
+  //converts UNIX time to readable format
   for (i = 1; i < 6; i++) {
     let unixTime = data.daily[i].dt;
     let date = new Date(unixTime * 1000);
-    // need to reformat the date to match
 
+    //renders forcast cards to the screen
     $("#forecastContainer").append(
-      `<div class="d-f f-d-c b-s p-20px card text-white bg-secondary mb-3">
+      `<div class="d-f f-d-c b-s p-20px card text-white bg-primary mb-3">
             <p>${date}</p>
             <p><image src="https://openweathermap.org/img/w/${data.daily[i].weather[0].icon}.png"></p>
             <p>Temp: ${data.daily[i].temp.day} °F</p>
@@ -35,6 +34,7 @@ function appendToday(data) {
   let unixTime = data.current.dt;
   let regularDate = new Date(unixTime * 1000);
 
+  //renders my data to the screen
   $("#currentDayCard").append(
     `<div class="card text-dark bg-light mb-3">
     <h2>${regularDate} <image src="https://openweathermap.org/img/w/${data.current.weather[0].icon}.png"></h2>
@@ -45,16 +45,19 @@ function appendToday(data) {
         </div>`
   );
   addBorder();
+  // checks UVI and adds a class to correspond to risk level
   checkUvi(data);
 };
 
 function checkLocalStorage() {
   let citiesStorage = localStorage.getItem("cities");
      if (citiesStorage) {
-        // loop through local storage and create btns with the button label as the city
+        // loops through local storage and create btns with the button label as the city
         cities = JSON.parse(citiesStorage);
        createBtns(cities);
-    };
+       $("#clearBtn").removeClass("d-n");
+  };
+
 };
 
 function checkUvi(data) {
@@ -71,11 +74,16 @@ function checkValue(e) {
   console.log();
   let selectedCity = e.target.getAttribute("data-past");
   getLatLon(selectedCity);
-}
+};
 
 function clearCurrentInfo() {
   $("#currentDayCard").empty();
   $("#forecastContainer").empty();
+};
+
+function clearStorage() {
+  localStorage.clear();
+  location.reload();
 };
 
 function createBtns(cities) {
@@ -99,35 +107,34 @@ function getForecast(lat, lon, apiKey) {
       return response.json();
     })
     .then(function (data) {
+      // passes data into append functions to render the info on the screen
       appendToday(data);
       appendForcast(data);
     });
 };
 
 function getLatLon(city) {
+  //clears containers before appending more data
   clearCurrentInfo();
-  let chosenCity = city || $("#cityInput").val() || "Chicago";
+  let chosenCity = city || $("#cityInput").val().toUpperCase() || "Chicago";
+  //chosenCity = chosenCity.replace(/ /g, '');
+  // checks to see if city is alreay in local strage array cities, adds it if not
   if (!cities.includes(chosenCity)) {
     cities.push(chosenCity);
   }
+  // stores the cities arrray in local stroage
   storeCity();
+  // returns the lat & lon for the chosen city
   let apiKey = "c4688ef0bd37f92ed6bda82728650dcc";
   fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${chosenCity}&limit=5&appid=${apiKey}`)
     .then(function (response) {
-      console.log(response.status);
-      console.log(response);
-      // //  Conditional for the the response.status.
-      //  if (response.status !== 200) {
-      // //   // Place the response.status on the page.
-      //   currentDayCard.textContent = response.status;
-      //  }
       return response.json();
     })
     .then(function (data) {
       $("#currentDayCard").append(`<h2>${data[0].name}, ${data[0].country}<h2>`);
-      console.log(data);
       let lon = data[0].lat;
       let lat = data[0].lon;
+      // passes lat lon & api key into secondary fetch function to get the "creme filling"
       getForecast(lon, lat, apiKey);
     });
 };
@@ -140,11 +147,14 @@ init();
 
 $("#searchBtn").on("click", () => getLatLon());
 $(".btn-secondary").on("click", checkValue);
+$("#clearBtn").on("click", clearStorage);
 
 
 // TO DO's
-// convert Unix Time to readable
-// append buttons at the end of the cycle, without refreshing page
+// caplitalize first letter and remove all spaces for users input
+// get unix time in more user friendly format
+// convert first letter of any input to capital letter
+// append buttons at the end of the cycle, without refreshing page & without creating duplicatates
 
 
 
