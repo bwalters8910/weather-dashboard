@@ -71,6 +71,7 @@ function checkUvi(data) {
 };
 
 function checkValue(e) {
+  // this function passes the past button text value into the main getlatLog function
   console.log();
   let selectedCity = e.target.getAttribute("data-past");
   getLatLon(selectedCity);
@@ -116,7 +117,7 @@ function getForecast(lat, lon, apiKey) {
 function getLatLon(city) {
   //clears containers before appending more data
   clearCurrentInfo();
-  let chosenCity = city || $("#cityInput").val().toUpperCase() || "Chicago";
+  let chosenCity = city || $("#cityInput").val().toUpperCase() || "CHICAGO";
   //chosenCity = chosenCity.replace(/ /g, '');
   // checks to see if city is alreay in local strage array cities, adds it if not
   if (!cities.includes(chosenCity)) {
@@ -150,11 +151,11 @@ $(".btn-secondary").on("click", checkValue);
 $("#clearBtn").on("click", clearStorage);
 
 
-// TO DO's
-// caplitalize first letter and remove all spaces for users input
-// get unix time in more user friendly format
-// convert first letter of any input to capital letter
+// FUTURE DEVELOPMENT:
+// make mobile friendly
+// get unix time to a more user friendly format
 // append buttons at the end of the cycle, without refreshing page & without creating duplicatates
+// further styling and api integration
 
 
 
