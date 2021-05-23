@@ -7,7 +7,7 @@ This is a weather app that uses a free weather API to display current weather co
 You can download the repo for this app at (https://github.com/bwalters8910/weather-dashboard). Or you can visit the deployed app at (https://bwalters8910.github.io/weather-dashboard/).
 
 ## Usage
-To use the app, just type a city into the search bar and click "submit". If you refresh the page, or revisting the page later, your past searches will be listed as buttons which can be clicked for ease of use.
+To use the app, just type a city into the search bar and click "search". If you refresh the page, or revist the page later, your past searches will be listed as buttons which can be clicked for ease of use.
 
 ![screenshot](assets/images/screenshot.PNG)
 
