@@ -87,12 +87,14 @@ function clearStorage() {
   location.reload();
 };
 
-function createBtns(cities) {
+function createBtns() {
+  $("#pastBtnContainer").empty();
   for (i = 0; i < cities.length; i++) {
     $("#pastBtnContainer").prepend(
       `<button data-past=${cities[i]} class="btn btn-secondary">${cities[i]}</button>`
     );
   };
+  $(".btn-secondary").on("click", checkValue);
 };
 
 function storeCity() {
@@ -111,6 +113,7 @@ function getForecast(lat, lon, apiKey) {
       // passes data into append functions to render the info on the screen
       appendToday(data);
       appendForcast(data);
+      //createLastBtn(); function to create last button searched & append it
     });
 };
 
@@ -125,6 +128,8 @@ function getLatLon(city) {
   }
   // stores the cities arrray in local stroage
   storeCity();
+  createBtns();
+
   // returns the lat & lon for the chosen city
   let apiKey = "c4688ef0bd37f92ed6bda82728650dcc";
   fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${chosenCity}&limit=5&appid=${apiKey}`)
@@ -144,10 +149,17 @@ function showTitle() {
   $("#forecastTitle").removeClass("d-n");
 };
 
+function createLastBtn() {
+  // var lastCity = cities[cities.length - 1];
+  // $("#pastBtnContainer").prepend(
+  //   `<button data-past=${cities} class="btn btn-secondary">${lastCity}</button>`
+  // );
+}
+
 init();
 
 $("#searchBtn").on("click", () => getLatLon());
-$(".btn-secondary").on("click", checkValue);
+
 $("#clearBtn").on("click", clearStorage);
 
 
@@ -155,7 +167,7 @@ $("#clearBtn").on("click", clearStorage);
 // make mobile friendly
 // get unix time to a more user friendly format
 // append buttons at the end of the cycle, without refreshing page & without creating duplicatates
-// further styling and api integration
+// more styling
 
 
 
