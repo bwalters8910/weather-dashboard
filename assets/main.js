@@ -165,8 +165,6 @@ $("#clearBtn").on("click", clearStorage);
 
 // FUTURE DEVELOPMENT:
 // make mobile friendly
-// get unix time to a more user friendly format
-// append buttons at the end of the cycle, without refreshing page & without creating duplicatates
 // more styling
 
 
