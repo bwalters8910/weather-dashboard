@@ -19,7 +19,7 @@ function appendForcast(data) {
     //renders forcast cards to the screen
     $("#forecastContainer").append(
       `<div class="d-f f-d-c b-s p-20px card text-white bg-primary mb-3">
-            <p>${date}</p>
+            <p>${date.toLocaleDateString()}</p>
             <p><image src="https://openweathermap.org/img/w/${data.daily[i].weather[0].icon}.png"></p>
             <p>Temp: ${data.daily[i].temp.day} °F</p>
             <p>Wind: ${data.daily[i].wind_speed} mph</p>
@@ -37,7 +37,7 @@ function appendToday(data) {
   //renders my data to the screen
   $("#currentDayCard").append(
     `<div class="card text-dark bg-light mb-3">
-    <h2>${regularDate} <image src="https://openweathermap.org/img/w/${data.current.weather[0].icon}.png"></h2>
+    <h2>${regularDate.toLocaleDateString()} <image src="https://openweathermap.org/img/w/${data.current.weather[0].icon}.png"></h2>
         <p>Temp: ${data.current.temp} °F</p>
         <p>Wind: ${data.current.wind_speed} mph</p>
         <p>Humidity: ${data.current.humidity}%</p>
